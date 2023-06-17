@@ -1,8 +1,10 @@
 from django.db import models
-
+# Models
 from applications.autor.models import AutorModel
 
-# Create your models here.
+# Managers
+from applications.libro.managers import LibroManager
+
 
 
 class CategoriaModel(models.Model):
@@ -46,9 +48,15 @@ class LibroModel(models.Model):
         'Foto de Portada', 
         upload_to='portada', 
         height_field=None, width_field=None,
-        max_length=None
+        max_length=None,
+        blank=True,
+        null=True
     )
-    visitas = models.PositiveIntegerField()
+    visitas = models.PositiveIntegerField(
+        blank=True,
+        null=True
+    )
+    objects = LibroManager()
     
     class Meta:
         """Meta definition for Libro."""
@@ -58,5 +66,5 @@ class LibroModel(models.Model):
 
     def __str__(self):
         """Unicode representation of Libro."""
-        return self.titulo + ' ' + self.categoria
+        return self.titulo + ' ' + self.categoria.nombre
 

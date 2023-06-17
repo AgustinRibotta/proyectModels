@@ -1,6 +1,8 @@
 from django.db import models
 
-# Create your models here.
+# Managers
+
+from .managers import AutorManager
 
 
 class AutorModel(models.Model):
@@ -21,6 +23,8 @@ class AutorModel(models.Model):
     )
     adad = models.PositiveBigIntegerField()
     
+    objects = AutorManager()
+    
     class Meta:
         """Meta definition for Autor."""
 
@@ -29,4 +33,4 @@ class AutorModel(models.Model):
 
     def __str__(self):
         """Unicode representation of Autor."""
-        return self.name + ' ' + self.apellido
+        return self.nombre + ' ' + self.apellido
