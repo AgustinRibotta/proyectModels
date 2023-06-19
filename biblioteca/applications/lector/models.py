@@ -38,7 +38,8 @@ class PrestamoModel(models.Model):
     
     lector = models.ForeignKey(
         LectorModel, 
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name= 'prestamo'
     )
     libro = models.ForeignKey(
         LibroModel, 

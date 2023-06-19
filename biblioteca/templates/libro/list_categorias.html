@@ -1,0 +1,9 @@
+<h1> Desde listado de categoria con cantidad de libros</h1>
+
+<ul>
+    
+    {% for c in categorias %}
+    <li>{{c}} -- Numero de libros:{{c.num_libros}}</li>    
+    {% endfor %}
+        
+</ul>

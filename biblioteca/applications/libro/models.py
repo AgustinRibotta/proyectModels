@@ -3,7 +3,7 @@ from django.db import models
 from applications.autor.models import AutorModel
 
 # Managers
-from applications.libro.managers import LibroManager
+from applications.libro.managers import LibroManager, CategoriaManager
 
 
 
@@ -15,6 +15,8 @@ class CategoriaModel(models.Model):
         'Nombre', 
         max_length=30
     )
+    objects = CategoriaManager()
+    
     class Meta:
         """Meta definition for Categoria."""
 
@@ -23,7 +25,7 @@ class CategoriaModel(models.Model):
 
     def __str__(self):
         """Unicode representation of Categoria."""
-        return self.nombre
+        return  self.nombre 
     
 
 class LibroModel(models.Model):
@@ -32,17 +34,19 @@ class LibroModel(models.Model):
     # TODO: Define fields here
     categoria = models.ForeignKey(
         CategoriaModel, 
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        # Con esto relacionamos la categoria con los libros
+        related_name= 'categoria_libro'
     )
     autores = models.ManyToManyField(AutorModel)
     titulo = models.CharField(
         'Titulo', 
-        max_length=50
+        max_length=50,
     )
     fecha = models.DateField(
         'Fehca de Lanzamiento', 
         auto_now=False, 
-        auto_now_add=False
+        auto_now_add=False,
     )
     portada = models.ImageField(
         'Foto de Portada', 
@@ -66,5 +70,5 @@ class LibroModel(models.Model):
 
     def __str__(self):
         """Unicode representation of Libro."""
-        return self.titulo + ' ' + self.categoria.nombre
+        return str(self.id) + ' - ' + self.titulo + ' ' + self.categoria.nombre 
 

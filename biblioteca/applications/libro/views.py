@@ -1,14 +1,15 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 # Modelos
-from .models import LibroModel
+from .models import CategoriaModel, LibroModel
 
 # Create your views here.
 
 
 
 class ListaLibros(ListView):
+    
     template_name = "libro/lista.html"
     context_object_name = 'lista'
     
@@ -23,6 +24,38 @@ class ListaLibros(ListView):
            return LibroModel.objects.buscar_libros4(palabra_clave, f1, f2)
         else:
            return LibroModel.objects.listar_libros()
+       
+
+class ListLibros2(ListView):
+    
+    template_name = "libro/lista2.html"
+    context_object_name = 'lista'
+    
+    def get_queryset(self):
         
+        palabra_clave = self.request.GET.get('kword', '')
+
+        if palabra_clave:
+            
+            return LibroModel.objects.listar_libros_categoria(palabra_clave)
+        
+        else:
+            return LibroModel.objects.all()
+        
+        
+
+class LibroDetalle(DetailView):
+    model = LibroModel
+    template_name = "libro/detalle.html"
+
     
 
+
+class CategoriaListView(ListView):
+
+    template_name = "libro/list_categorias.html"
+    context_object_name = 'categorias'
+    
+    def get_queryset(self):
+
+        return CategoriaModel.objects.listar_categoria_libros()

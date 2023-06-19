@@ -1,0 +1,16 @@
+<h1>Desde detalle</h1>
+
+<p>{{ libromodel.titulo }}</p>
+<p>{{ libromodel.fecha }}</p>
+<p>{{ libromodel.categoria }}</p>
+
+
+<p>------Meny to Meny------------</p>
+
+<ul>
+    
+    {% for a in libromodel.autores.all  %}
+        <li>{{a}}</li>
+    {% endfor %}
+        
+</ul>
