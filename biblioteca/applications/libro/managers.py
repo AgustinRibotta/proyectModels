@@ -65,6 +65,15 @@ class LibroManager (models.Manager):
         )
         return resultado
     
+    def num_libros_prestados(self):
+        resulado = self.annotate(
+            num_prstamos = Count('libro_prestamo')
+        )
+        for r in resulado:
+            print (r, r.num_prstamos)
+            
+        return resulado
+
     
 class CategoriaManager (models.Manager):
    

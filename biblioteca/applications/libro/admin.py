@@ -12,8 +12,8 @@ admin.site.register(CategoriaModel)
 class Admin(admin.ModelAdmin):
     '''Admin View for '''
 
-    list_display = ('categoria',)
+    list_display = ('id','titulo')
     list_filter = ('categoria',)
     
     
-# admin.site.register(LibroModel, Admin)
+# admin.site.register(LibroModel, Admin)    
