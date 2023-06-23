@@ -4,6 +4,8 @@ from django.db import models
 
 from django.db.models import Q, Count
 
+from django.contrib.postgres.search import TrigramSimilarity
+
 
 class LibroManager (models.Manager):
     # Listar los libros
@@ -27,6 +29,19 @@ class LibroManager (models.Manager):
         )
         return resultado
     
+    # Busca libros teniendo en cuanta la concidencia de letras.
+    def buscar_libros_trg(self, kword):
+        
+        if kword :
+            resultado = self.filter(
+                titulo__trigram_similar = kword,
+                
+            )
+            return resultado
+        else:
+            resultado = self.all()[:10]
+            return resultado
+         
     # Filtra libros por el titulo o por la fecha indicada
     def buscar_libros4(self, kword, fecha1, fecha2):
         
@@ -59,20 +74,13 @@ class LibroManager (models.Manager):
         libro.autores.delete(autor)
         return libro
     
+    # Nos cuenta la cantidad de veces que fue porestado un libro
     def libros_num_prestamos (self):
         resultado = self.aggregate(
             num_prestamos = Count('prestamo')
         )
         return resultado
     
-    def num_libros_prestados(self):
-        resulado = self.annotate(
-            num_prstamos = Count('libro_prestamo')
-        )
-        for r in resulado:
-            print (r, r.num_prstamos)
-            
-        return resulado
 
     
 class CategoriaManager (models.Manager):

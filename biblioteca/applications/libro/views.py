@@ -59,3 +59,15 @@ class CategoriaListView(ListView):
     def get_queryset(self):
 
         return CategoriaModel.objects.listar_categoria_libros()
+    
+
+class ListaLibrosTrg(ListView):
+    
+    template_name = "libro/lista.html"
+    context_object_name = 'lista'
+    
+    def get_queryset(self):
+        palabra_clave = self.request.GET.get('kword', '')
+        
+        return LibroModel.objects.buscar_libros_trg(palabra_clave)
+       

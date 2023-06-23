@@ -24,4 +24,10 @@ urlpatterns = [
         views.CategoriaListView.as_view(),
         name='Listado-libros'
     ),
+    path(
+        'lista-trg/',
+        views.ListaLibrosTrg.as_view(),
+        name='Listado-trg'
+    ),
 ]
+

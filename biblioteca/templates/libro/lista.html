@@ -8,6 +8,10 @@
     
     <button type="submit">Buscar</button>
 </form>
+<form action="" method="get">{% csrf_token %}
+    <input type="text" id="kword" name="kword" placeholder="Ingrese nombre del libro">
+    <button type="submit">Buscar</button>
+</form>
 
 <ul>
     
