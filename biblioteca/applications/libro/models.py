@@ -59,16 +59,23 @@ class LibroModel(models.Model):
     visitas = models.PositiveIntegerField(
         blank=True,
         null=True
-    )
+    )       
+    stock = models.PositiveIntegerField(
+        default=0
+    )       
     objects = LibroManager()
     
+    
+    # Todo aquello que no es un atributo en el modelo o base de datos
     class Meta:
         """Meta definition for Libro."""
+       
 
         verbose_name = 'Libro'
         verbose_name_plural = 'Libros'
+        ordering = ['titulo','fecha']
 
     def __str__(self):
         """Unicode representation of Libro."""
-        return str(self.id) + ' - ' + self.titulo + ' ' + self.categoria.nombre 
+        return str(self.id) + ' - ' + self.titulo 
 
