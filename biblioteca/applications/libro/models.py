@@ -1,7 +1,9 @@
 from django.db import models
+from django.db.models.signals import post_save
+#App de terceros
+from PIL import Image
 # Models
 from applications.autor.models import AutorModel
-
 # Managers
 from applications.libro.managers import LibroManager, CategoriaManager
 
@@ -51,7 +53,8 @@ class LibroModel(models.Model):
     portada = models.ImageField(
         'Foto de Portada', 
         upload_to='portada', 
-        height_field=None, width_field=None,
+        height_field=None, 
+        width_field=None,
         max_length=None,
         blank=True,
         null=True
@@ -79,3 +82,11 @@ class LibroModel(models.Model):
         """Unicode representation of Libro."""
         return str(self.id) + ' - ' + self.titulo 
 
+
+def optimize_imagen(sender, instance, **kwargs):
+    
+    if instance.portada:
+        portada = Image.open(instance.portada.path)
+        portada.save(instance.portada.path, quality= 20, optimize=True)
+
+post_save.connect(optimize_imagen, sender= LibroModel)

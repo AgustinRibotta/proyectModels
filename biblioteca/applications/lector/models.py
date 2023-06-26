@@ -1,5 +1,6 @@
 from collections.abc import Iterable
 from django.db import models
+from django.db.models.signals import post_delete
 
 
 # CMannagers
@@ -58,3 +59,9 @@ class PrestamoModel(models.Model):
         return self.libro.titulo                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
 
 
+def update_libro_stock(sender, instance, **kwargs):
+    # Actualizamos el stock
+    instance.libro.stock = instance.libro.stock + 1 
+    instance.libro.save ()
+    
+post_delete.connect(update_libro_stock, sender=PrestamoModel)
